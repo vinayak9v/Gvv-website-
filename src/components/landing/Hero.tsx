@@ -70,19 +70,17 @@ export default function Hero() {
   );
 
   return (
-     <section
-  ref={ref}
-  className="relative flex flex-col items-center justify-center min-h-[75vh] px-4 text-center  w-full bg-cover bg-center bg-no-repeat"
-  style={{
-    backgroundImage: "url('/ChatGPT Image Jun 5, 2026, 01_07_51 PM.png')",
-  }}
->
-   <Navbar />
+    <section
+      ref={ref}
+      className="relative flex flex-col items-center justify-center min-h-[75vh] px-4 text-center w-full bg-cover bg-center bg-no-repeat overflow-hidden"
+      style={{
+        backgroundImage: "url('/ChatGPT Image Jun 5, 2026, 01_07_51 PM.png')",
+      }}
+    >
+      <Navbar />
       <div className="relative w-full px-2 pointer-events-none -mt-4 bg-transparent z-0 mt-10">
         <h1 className="relative mx-auto mb-12 max-w-full whitespace-nowrap text-center text-[13px] font-extrabold leading-tight tracking-normal text-white sm:text-2xl md:text-4xl lg:text-5xl bg-transparent">
-          <span className="hero-word inline-block">
-            {HERO_TITLE}
-          </span>
+          <span className="hero-word inline-block">{HERO_TITLE}</span>
         </h1>
       </div>
 
@@ -100,23 +98,11 @@ export default function Hero() {
         </h2>
       </div>
 
-      <div className="wave-divider relative w-full h-24 mt-12 overflow-hidden pointer-events-none">
+      <div className="wave-divider relative w-full h-24 mt-12 overflow-hidden pointer-events-none z-10">
         <div className="wave-track absolute inset-y-0 left-0 flex" style={{ width: '200%' }}>
           <svg viewBox="0 0 1200 100" preserveAspectRatio="none" className="w-1/2 h-full">
-            <path
-              d="M0,50 C60,10 120,90 180,50 S300,10 360,50 S420,90 480,50 S540,10 600,50 S660,90 720,50 S780,10 840,50 S900,90 960,50 S1020,10 1080,50 S1140,90 1200,50"
-              stroke="rgba(56,189,248,0.95)"
-              strokeWidth="3"
-              fill="none"
-              strokeLinecap="round"
-            />
-            <path
-              d="M0,50 C60,10 120,90 180,50 S300,10 360,50 S420,90 480,50 S540,10 600,50 S660,90 720,50 S780,10 840,50 S900,90 960,50 S1020,10 1080,50 S1140,90 1200,50"
-              stroke="rgba(187,247,255,0.4)"
-              strokeWidth="1.5"
-              fill="none"
-              strokeLinecap="round"
-            />
+            <path d="M0,50 C60,10 120,90 180,50 S300,10 360,50 S420,90 480,50 S540,10 600,50 S660,90 720,50 S780,10 840,50 S900,90 960,50 S1020,10 1080,50 S1140,90 1200,50" stroke="rgba(56,189,248,0.95)" strokeWidth="3" fill="none" strokeLinecap="round" />
+            <path d="M0,50 C60,10 120,90 180,50 S300,10 360,50 S420,90 480,50 S540,10 600,50 S660,90 720,50 S780,10 840,50 S900,90 960,50 S1020,10 1080,50 S1140,90 1200,50" stroke="rgba(187,247,255,0.4)" strokeWidth="1.5" fill="none" strokeLinecap="round" />
             <circle cx="180" cy="50" r="5" fill="#7dd3fc" className="animate-pulse" />
             <circle cx="360" cy="50" r="5" fill="#60a5fa" className="animate-pulse" />
             <circle cx="540" cy="50" r="5" fill="#38bdf8" className="animate-pulse" />
@@ -125,20 +111,8 @@ export default function Hero() {
             <circle cx="1080" cy="50" r="5" fill="#38bdf8" className="animate-pulse" />
           </svg>
           <svg viewBox="0 0 1200 100" preserveAspectRatio="none" className="w-1/2 h-full">
-            <path
-              d="M0,50 C60,10 120,90 180,50 S300,10 360,50 S420,90 480,50 S540,10 600,50 S660,90 720,50 S780,10 840,50 S900,90 960,50 S1020,10 1080,50 S1140,90 1200,50"
-              stroke="rgba(56,189,248,0.8)"
-              strokeWidth="3"
-              fill="none"
-              strokeLinecap="round"
-            />
-            <path
-              d="M0,50 C60,10 120,90 180,50 S300,10 360,50 S420,90 480,50 S540,10 600,50 S660,90 720,50 S780,10 840,50 S900,90 960,50 S1020,10 1080,50 S1140,90 1200,50"
-              stroke="rgba(187,247,255,0.25)"
-              strokeWidth="1.5"
-              fill="none"
-              strokeLinecap="round"
-            />
+            <path d="M0,50 C60,10 120,90 180,50 S300,10 360,50 S420,90 480,50 S540,10 600,50 S660,90 720,50 S780,10 840,50 S900,90 960,50 S1020,10 1080,50 S1140,90 1200,50" stroke="rgba(56,189,248,0.8)" strokeWidth="3" fill="none" strokeLinecap="round" />
+            <path d="M0,50 C60,10 120,90 180,50 S300,10 360,50 S420,90 480,50 S540,10 600,50 S660,90 720,50 S780,10 840,50 S900,90 960,50 S1020,10 1080,50 S1140,90 1200,50" stroke="rgba(187,247,255,0.25)" strokeWidth="1.5" fill="none" strokeLinecap="round" />
             <circle cx="120" cy="50" r="4" fill="#7dd3fc" className="animate-pulse" />
             <circle cx="300" cy="50" r="4" fill="#60a5fa" className="animate-pulse" />
             <circle cx="480" cy="50" r="4" fill="#38bdf8" className="animate-pulse" />
@@ -149,6 +123,8 @@ export default function Hero() {
         </div>
       </div>
 
+      {/* SMOKE / FADE BLEND EFFECT ADDED HERE */}
+<div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#090E17] via-[#090E17]/80 to-transparent pointer-events-none z-20"></div>
     </section>
   );
 }

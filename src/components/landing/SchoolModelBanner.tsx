@@ -6,6 +6,7 @@ import { Menu } from 'lucide-react';
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import type { MutableRefObject } from 'react';
 import * as THREE from 'three';
+import { EffectComposer, Bloom } from "@react-three/postprocessing";
 
 const MODEL_URL = '/models/school.glb';
 const VERTICAL_ROTATION_LIMIT = Math.PI / 3;
@@ -25,6 +26,33 @@ function SchoolModel({
 
   const model = useMemo(() => {
     const cloned = scene.clone();
+
+    cloned.traverse((child) => {
+      if (child instanceof THREE.Mesh) {
+        
+        // MAGIC: Yahan apne object ka exact naam daalein jo permanently hide karna hai
+        if (child.name === "YOUR_OBJECT_NAME_HERE") {
+          child.visible = false; 
+        } else {
+          // Baaki objects normal rahenge
+          child.visible = true;  
+          child.castShadow = true;
+          child.receiveShadow = true;
+
+          if (child.material) {
+            const materials = Array.isArray(child.material) ? child.material : [child.material];
+            materials.forEach(mat => {
+              // Overglow control
+              if (mat.emissive && mat.emissiveIntensity > 1.5) {
+                 mat.emissiveIntensity = 1.0; 
+              }
+              mat.needsUpdate = true;
+            });
+          }
+        }
+      }
+    });
+
     const box = new THREE.Box3().setFromObject(cloned);
     const size = new THREE.Vector3();
     const center = new THREE.Vector3();
@@ -37,7 +65,10 @@ function SchoolModel({
 
     cloned.position.set(-center.x, -center.y, -center.z);
 
-    return { object: cloned, scale };
+    return {
+      object: cloned,
+      scale,
+    };
   }, [scene]);
 
   useFrame((_, delta) => {
@@ -59,6 +90,7 @@ function SchoolModel({
   return (
     <group ref={groupRef} scale={model.scale}>
       <Center>
+        {/* onClick hata diya gaya hai, object ab direct load hone par hide hoga */}
         <primitive object={model.object} />
       </Center>
     </group>
@@ -141,16 +173,52 @@ export default function SchoolModelBanner() {
         <div className="absolute inset-x-0 bottom-12 top-0 z-0">
           {modelReady ? (
             <Canvas
-              camera={{ position: [0, 2.1, 5.4], fov: 38 }}
-              gl={{ antialias: true, powerPreference: 'high-performance' }}
+              shadows
+              camera={{ position: [0, 2.8, 5.8], fov: 38 }}
+              gl={{
+                antialias: true,
+                powerPreference: "high-performance",
+                toneMapping: THREE.ACESFilmicToneMapping,
+                toneMappingExposure: 1.0, 
+              }}
             >
-              <ambientLight intensity={0.75} />
-              <directionalLight position={[5, 8, 6]} intensity={1.4} />
-              <pointLight position={[-4, 3, 4]} intensity={0.8} color="#5BC0EB" />
+              <ambientLight intensity={0.15} />
+
+              <directionalLight
+                castShadow
+                position={[8, 12, -8]}
+                intensity={2.5}
+                color="#FFDCA8" 
+                shadow-mapSize-width={2048}
+                shadow-mapSize-height={2048}
+                shadow-bias={-0.0005}
+              />
+
+              <pointLight 
+                position={[0, -5, 0]} 
+                intensity={1.0} 
+                color="#00FFFF" 
+                distance={15}
+                decay={2}
+              />
+
               <Suspense fallback={<ModelLoader />}>
                 <SchoolModel rotationTarget={rotationTarget} />
-                <Environment preset="city" />
+                
+                <Environment
+                  preset="sunset"
+                  background={false}
+                />
               </Suspense>
+
+              <EffectComposer disableNormalPass>
+                <Bloom
+                  intensity={1.5}
+                  luminanceThreshold={1.8} 
+                  luminanceSmoothing={0.1}
+                  mipmapBlur
+                />
+              </EffectComposer>
             </Canvas>
           ) : (
             <div className="h-full w-full" />
@@ -196,4 +264,4 @@ export default function SchoolModelBanner() {
       </p>
     </div>
   );
-}
+} 
